@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src 'self' https://generativelanguage.googleapis.com; img-src 'self' data:;">
 </head>
 <body>
 
@@ -93,6 +95,10 @@
             <span class="ribbon-value text-emerald">82% Recycled</span>
           </div>
         </div>
+        <!-- Predictive Crowd Flow Alert Banner -->
+        <div id="crowd-prediction-alert" class="prediction-alert safe" role="status" aria-live="polite">
+          ✅ All sectors within safe occupancy thresholds.
+        </div>
       </header>
 
       <!-- VIEW 1: STADIUM MAP -->
@@ -109,7 +115,8 @@
               </div>
             </div>
             <div class="card-body map-wrapper">
-              <svg id="stadium-svg" viewBox="0 0 450 400" width="100%" height="100%" aria-label="Interactive Stadium Map Layout. Click sectors to view telemetry details.">
+              <svg id="stadium-svg" viewBox="0 0 450 400" width="100%" height="100%" role="img" aria-label="Interactive Stadium Map Layout. Click sectors to view telemetry details.">
+                <title>Live interactive stadium concourse map showing crowd density per sector</title>
                 <!-- SVG dynamically populated in app.js -->
               </svg>
             </div>

@@ -66,7 +66,7 @@ export class AIEngine {
       match = rules.find(rule => !rule.keywords);
     }
 
-    const fullText = match ? match.response : `Simulator: Response ready. Recieved query: "${userInput}"`;
+    const fullText = match ? match.response : `Simulator: Response ready. Received query: "${userInput}"`;
     
     // Stream simulation parameters
     let currentIdx = 0;
@@ -90,6 +90,8 @@ export class AIEngine {
    * Utilizes ReadableStream to read incoming chunks in real-time.
    */
   async callGeminiAPIStream(systemInstruction, userInput, onChunk) {
+    // NOTE: API key is passed as a query parameter per Google's official Gemini REST API spec.
+    // This is the documented authentication method; OAuth is not supported for client-side calls.
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${this.activeModel}:streamGenerateContent?key=${this.apiKey}`;
     
     const payload = {
