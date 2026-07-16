@@ -147,7 +147,8 @@
             
             <div class="card-footer chat-input-area">
               <form id="fan-chat-form" class="chat-form" aria-label="Concierge Message Input Form">
-                <input type="text" id="fan-chat-input" placeholder="Ask about step-free access, shuttles, restrooms..." aria-label="Ask the stadium concierge" autocomplete="off" required>
+                <label for="fan-chat-input" class="visually-hidden">Ask the stadium concierge</label>
+                <input type="text" id="fan-chat-input" placeholder="Ask about step-free access, shuttles, restrooms..." autocomplete="off" required>
                 <button type="submit" class="btn-primary" id="btn-send-fan">Send ⚡</button>
               </form>
             </div>
@@ -237,15 +238,15 @@
             <span class="status-pulse text-red" aria-hidden="true"></span>
           </div>
           <div class="card-body ticker-body">
-            <div class="ticker-event" id="alert-1" role="button" name="alert-card" tabindex="0" data-alert="Medical distress: heat collapse of spectator in Sector 108, Row 12, seat 4. Needs immediate responder team.">
+            <div class="ticker-event" id="alert-1" role="button" tabindex="0" data-alert="Medical distress: heat collapse of spectator in Sector 108, Row 12, seat 4. Needs immediate responder team.">
               <span class="ticker-badge red">CRITICAL</span>
               <span class="ticker-text">Sector 108: Heat distress reported in Row 12. Medical assistance requested.</span>
             </div>
-            <div class="ticker-event" id="alert-2" role="button" name="alert-card" tabindex="0" data-alert="Compostable sorting bins in Sector 112 are reporting 85% capacity with plastics mixed in. Volunteer redirection required.">
+            <div class="ticker-event" id="alert-2" role="button" tabindex="0" data-alert="Compostable sorting bins in Sector 112 are reporting 85% capacity with plastics mixed in. Volunteer redirection required.">
               <span class="ticker-badge amber">WARNING</span>
               <span class="ticker-text">Sector 112: Compost bin contamination detected at waste station 3.</span>
             </div>
-            <div class="ticker-event" id="alert-3" role="button" name="alert-card" tabindex="0" data-alert="Pedestrian congestion at Gate A entry plaza. Turnstiles lag 12 mins. Recommend directing fans to Gate B lanes.">
+            <div class="ticker-event" id="alert-3" role="button" tabindex="0" data-alert="Pedestrian congestion at Gate A entry plaza. Turnstiles lag 12 mins. Recommend directing fans to Gate B lanes.">
               <span class="ticker-badge amber">CONGESTION</span>
               <span class="ticker-text">Gate A: Processing delay. Crowd build-up in progress.</span>
             </div>
@@ -397,7 +398,8 @@
               <p class="small-text margin-bottom">Report on-site alerts or congestion events. Generative AI will analyze severity, generate immediate dispatch briefs, and outline PA instructions. Click any event card in the top alert ticker to auto-fill details.</p>
               
               <form id="incident-form" class="incident-form" aria-label="Operations Incident Dispatch Form">
-                <textarea id="incident-input" placeholder="Select a notification card above, or describe incident details manually (e.g. 'Water leak near elevator C')..." aria-label="Describe the incident" required></textarea>
+                <label for="incident-input" class="visually-hidden">Describe the incident details</label>
+                <textarea id="incident-input" placeholder="Select a notification card above, or describe incident details manually (e.g. 'Water leak near elevator C')..." required></textarea>
                 <button type="submit" class="btn-danger w-100" id="btn-dispatch">Analyze & Dispatch with GenAI ⚡</button>
               </form>
 
@@ -452,7 +454,8 @@
                 <h3>1. Gemini API Credentials</h3>
                 <p class="small-text text-light">Configure your Google AI Studio API key to run real requests against the Gemini model. Otherwise, local simulation queries are executed.</p>
                 <div class="api-key-input-row">
-                  <input type="password" id="gemini-api-key" placeholder="AIzaSy... (Saved locally in your browser)" aria-label="Gemini API Key input">
+                  <label for="gemini-api-key" class="visually-hidden">Google Gemini API Key Credentials</label>
+                  <input type="password" id="gemini-api-key" placeholder="AIzaSy... (Saved locally in your browser)">
                   <button type="button" class="btn-primary" id="btn-save-key">Save Key</button>
                   <button type="button" class="btn-secondary hidden" id="btn-clear-key">Clear Key</button>
                 </div>
@@ -472,8 +475,8 @@
                 </div>
 
                 <div class="prompt-editor-container">
-                  <label for="prompt-editor-textarea" class="visually-hidden">System Instruction Editor</label>
-                  <textarea id="prompt-editor-textarea" class="prompt-textarea" aria-label="System prompt instructions text area"></textarea>
+                  <label for="prompt-editor-textarea" class="visually-hidden">Edit System Prompt instructions</label>
+                  <textarea id="prompt-editor-textarea" class="prompt-textarea"></textarea>
                   <div class="editor-actions">
                     <span class="char-counter" id="prompt-char-count">0 characters</span>
                     <button class="btn-secondary" id="btn-reset-prompt">Reset to Default</button>

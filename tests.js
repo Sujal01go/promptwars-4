@@ -1,7 +1,7 @@
 /**
  * ArenaAI 2026 - Browser-based Test Suite
  * Validates core functions, data models, prompt properties, security, and accessibility.
- * Expanded to 12 test assertions for higher test coverage and evaluation compliance.
+ * Node-safe and browser compatible.
  */
 
 import { SYSTEM_PROMPTS, SIMULATOR_DATABASE } from './prompts.js';
@@ -10,9 +10,20 @@ import { getDensityColor, describeSectorArc, STADIUM_SECTORS } from './map-data.
 // Helper equivalent to the safeRenderContent function in app.js
 function testSafeRender(text) {
   if (!text) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  let escaped = div.innerHTML;
+  
+  let escaped = '';
+  if (typeof document !== 'undefined') {
+    const div = document.createElement('div');
+    div.textContent = text;
+    escaped = div.innerHTML;
+  } else {
+    escaped = text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
   
   escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   escaped = escaped.replace(/^-\s+(.*)$/gm, '<li>$1</li>');
@@ -56,8 +67,8 @@ function calculateCarbonOffset(passengers, bottles) {
 // Local key validation mock
 function validateAPIKeyFormat(key) {
   if (!key) return false;
-  // Gemini key starts with AIzaSy and is 39 chars
-  const regex = /^AIzaSy[A-Za-z0-9_-]{33}$/;
+  // Gemini key starts with AIzaSy and is between 30 and 45 characters
+  const regex = /^AIzaSy[A-Za-z0-9_-]{30,40}$/;
   return regex.test(key);
 }
 
@@ -194,7 +205,8 @@ export const unitTests = [
       const dangerousMessage = "<script>alert('XSS')</script><iframe src='test'></iframe><img src=x onerror=alert(1)>";
       const cleanOutput = testSafeRender(dangerousMessage);
       
-      if (cleanOutput.includes("<script>") || cleanOutput.includes("<iframe>") || cleanOutput.includes("onerror")) {
+      // Look for unescaped HTML opening tags of scripting payloads
+      if (cleanOutput.includes("<script") || cleanOutput.includes("<iframe") || cleanOutput.includes("<img")) {
         throw new Error(`Security Failure: Rendered text contains unescaped HTML elements. Output: "${cleanOutput}"`);
       }
       if (!cleanOutput.includes("&lt;script&gt;") && !cleanOutput.includes("&lt;iframe")) {
