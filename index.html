@@ -33,27 +33,27 @@
       <div class="a11y-quickbar" aria-label="Accessibility Settings">
         <span class="a11y-label">A11y Tools</span>
         <div class="a11y-buttons">
-          <button id="btn-a11y-contrast" title="Toggle High Contrast Mode" aria-label="Toggle High Contrast Mode">🌓</button>
+          <button id="btn-a11y-contrast" title="Toggle High Contrast Mode" aria-label="Toggle High Contrast Mode" aria-pressed="false">🌓</button>
           <button id="btn-a11y-textup" title="Increase Text Size" aria-label="Increase Text Size">A+</button>
           <button id="btn-a11y-textdn" title="Reset Text Size" aria-label="Reset Text Size">A-</button>
-          <button id="btn-a11y-audio" title="Toggle AI Text-to-Speech Voice" aria-label="Toggle AI Text-to-Speech Voice">🔊</button>
+          <button id="btn-a11y-audio" title="Toggle AI Text-to-Speech Voice" aria-label="Toggle AI Text-to-Speech Voice" aria-pressed="false">🔊</button>
         </div>
       </div>
       
-      <nav class="nav-menu">
-        <button class="nav-item active" id="btn-map" aria-current="page" tabindex="0">
+      <nav class="nav-menu" aria-label="Sidebar Menu">
+        <button class="nav-item active" id="btn-map" aria-current="page" aria-controls="view-map" aria-expanded="true" tabindex="0">
           <span class="nav-icon" aria-hidden="true">🗺️</span>
           <span class="nav-label">Stadium Map</span>
         </button>
-        <button class="nav-item" id="btn-fan" tabindex="0">
+        <button class="nav-item" id="btn-fan" aria-controls="view-fan" aria-expanded="false" tabindex="0">
           <span class="nav-icon" aria-hidden="true">💬</span>
           <span class="nav-label">Fan Concierge</span>
         </button>
-        <button class="nav-item" id="btn-ops" tabindex="0">
+        <button class="nav-item" id="btn-ops" aria-controls="view-ops" aria-expanded="false" tabindex="0">
           <span class="nav-icon" aria-hidden="true">🚨</span>
           <span class="nav-label">Operations Desk</span>
         </button>
-        <button class="nav-item" id="btn-lab" tabindex="0">
+        <button class="nav-item" id="btn-lab" aria-controls="view-lab" aria-expanded="false" tabindex="0">
           <span class="nav-icon" aria-hidden="true">🧪</span>
           <span class="nav-label">Prompt Lab & Tests</span>
         </button>
@@ -61,15 +61,15 @@
 
       <!-- Sidebar Footer / Status -->
       <div class="sidebar-footer">
-        <div class="mode-badge simulator" id="active-mode-badge" role="status">
-          <span class="status-pulse"></span>
+        <div class="mode-badge simulator" id="active-mode-badge" role="status" aria-live="polite">
+          <span class="status-pulse" aria-hidden="true"></span>
           <span id="active-mode-text">Simulator Mode</span>
         </div>
       </div>
     </aside>
 
     <!-- Main Content Area -->
-    <main class="main-content" id="main-content" role="main" aria-label="Dashboard Content">
+    <main class="main-content" id="main-content">
       
       <!-- Top Status Header -->
       <header class="top-header">
@@ -96,13 +96,13 @@
       </header>
 
       <!-- VIEW 1: STADIUM MAP -->
-      <section class="view-panel active" id="view-map" aria-labelledby="view-title">
+      <section class="view-panel active" id="view-map" role="tabpanel" aria-labelledby="btn-map">
         <div class="split-layout">
           <!-- Left: SVG Map Container -->
           <div class="card map-card">
             <div class="card-header">
               <h2>Live Concourse Blueprint</h2>
-              <div class="map-legend">
+              <div class="map-legend" role="presentation">
                 <span class="legend-item"><span class="legend-dot green"></span> Safe (&lt;50%)</span>
                 <span class="legend-item"><span class="legend-dot yellow"></span> Moderate (50%-80%)</span>
                 <span class="legend-item"><span class="legend-dot red"></span> Congested (&gt;80%)</span>
@@ -116,7 +116,7 @@
           </div>
 
           <!-- Right: Telemetry & Details -->
-          <div class="card details-card">
+          <div class="card details-card" aria-live="polite">
             <div class="card-header">
               <h2 id="sector-detail-title">Select a Stadium Sector</h2>
             </div>
@@ -131,7 +131,7 @@
       </section>
 
       <!-- VIEW 2: FAN CONCIERGE -->
-      <section class="view-panel" id="view-fan" aria-label="Fan Concierge Assistant">
+      <section class="view-panel" id="view-fan" role="tabpanel" aria-labelledby="btn-fan">
         <div class="chat-layout">
           
           <!-- Left: Chat Panel -->
@@ -146,7 +146,7 @@
             </div>
             
             <div class="card-footer chat-input-area">
-              <form id="fan-chat-form" class="chat-form">
+              <form id="fan-chat-form" class="chat-form" aria-label="Concierge Message Input Form">
                 <input type="text" id="fan-chat-input" placeholder="Ask about step-free access, shuttles, restrooms..." aria-label="Ask the stadium concierge" autocomplete="off" required>
                 <button type="submit" class="btn-primary" id="btn-send-fan">Send ⚡</button>
               </form>
@@ -160,7 +160,7 @@
                 <h3>Common Inquiries</h3>
               </div>
               <div class="card-body">
-                <div class="chip-container">
+                <div class="chip-container" aria-label="Common Inquiries Presets">
                   <button class="prompt-chip" data-prompt="Find step-free routes and elevators.">♿ Step-free access</button>
                   <button class="prompt-chip" data-prompt="How do I get to Metro Line 1?">🚇 Metro shuttle times</button>
                   <button class="prompt-chip" data-prompt="Where are the cleanest restrooms with short queues?">🚻 Shortest restroom wait</button>
@@ -196,9 +196,9 @@
                   </div>
                   <button type="button" class="btn-secondary w-100" id="btn-calculate-route">Find Accessible Route 📍</button>
                 </div>
-                <div id="route-result-box" class="route-result bg-dark hidden">
+                <div id="route-result-box" class="route-result bg-dark hidden" aria-live="polite">
                   <span class="route-headline">Accessible Wayfinding Advice:</span>
-                  <p class="small-text text-light" id="route-result-text"></p>
+                  <div class="small-text text-light" id="route-result-text"></div>
                 </div>
               </div>
             </div>
@@ -210,14 +210,14 @@
               </div>
               <div class="card-body">
                 <p class="small-text">Select a language to simulate instant GenAI transcription of the stadium public address system.</p>
-                <div class="language-selector">
-                  <button class="lang-btn active" data-lang="es">Español 🇪🇸</button>
-                  <button class="lang-btn" data-lang="fr">Français 🇫🇷</button>
-                  <button class="lang-btn" data-lang="pt">Português 🇵🇹</button>
-                  <button class="lang-btn" data-lang="ar">العربية 🇸🇦</button>
-                  <button class="lang-btn" data-lang="de">Deutsch 🇩🇪</button>
+                <div class="language-selector" aria-label="Announcement Languages Selection">
+                  <button class="lang-btn active" data-lang="es" aria-label="Translate to Spanish">Español 🇪🇸</button>
+                  <button class="lang-btn" data-lang="fr" aria-label="Translate to French">Français 🇫🇷</button>
+                  <button class="lang-btn" data-lang="pt" aria-label="Translate to Portuguese">Português 🇵🇹</button>
+                  <button class="lang-btn" data-lang="ar" aria-label="Translate to Arabic">العربية 🇸🇦</button>
+                  <button class="lang-btn" data-lang="de" aria-label="Translate to German">Deutsch 🇩🇪</button>
                 </div>
-                <div class="translation-result" id="translation-result-box">
+                <div class="translation-result" id="translation-result-box" aria-live="polite">
                   <p class="translation-orig"><strong>Live PA:</strong> "Gate A queue is heavily backed up. Please proceed to Gate B to reduce wait times."</p>
                   <div class="translation-trans" id="translated-pa-text">Select a language flag above to translate announcement.</div>
                 </div>
@@ -229,23 +229,23 @@
       </section>
 
       <!-- VIEW 3: OPERATIONS DESK -->
-      <section class="view-panel" id="view-ops" aria-label="Operations Management Desk">
+      <section class="view-panel" id="view-ops" role="tabpanel" aria-labelledby="btn-ops">
         <!-- Main Top Ticker: Real-Time Event Alerts -->
         <div class="card ticker-card margin-bottom">
           <div class="card-header">
             <h2>Real-Time Live Event Stream</h2>
-            <span class="status-pulse text-red"></span>
+            <span class="status-pulse text-red" aria-hidden="true"></span>
           </div>
           <div class="card-body ticker-body">
-            <div class="ticker-event" id="alert-1" role="button" tabindex="0" data-alert="Medical distress: heat collapse of spectator in Sector 108, Row 12, seat 4. Needs immediate responder team.">
+            <div class="ticker-event" id="alert-1" role="button" name="alert-card" tabindex="0" data-alert="Medical distress: heat collapse of spectator in Sector 108, Row 12, seat 4. Needs immediate responder team.">
               <span class="ticker-badge red">CRITICAL</span>
               <span class="ticker-text">Sector 108: Heat distress reported in Row 12. Medical assistance requested.</span>
             </div>
-            <div class="ticker-event" id="alert-2" role="button" tabindex="0" data-alert="Compostable sorting bins in Sector 112 are reporting 85% capacity with plastics mixed in. Volunteer redirection required.">
+            <div class="ticker-event" id="alert-2" role="button" name="alert-card" tabindex="0" data-alert="Compostable sorting bins in Sector 112 are reporting 85% capacity with plastics mixed in. Volunteer redirection required.">
               <span class="ticker-badge amber">WARNING</span>
               <span class="ticker-text">Sector 112: Compost bin contamination detected at waste station 3.</span>
             </div>
-            <div class="ticker-event" id="alert-3" role="button" tabindex="0" data-alert="Pedestrian congestion at Gate A entry plaza. Turnstiles lag 12 mins. Recommend directing fans to Gate B lanes.">
+            <div class="ticker-event" id="alert-3" role="button" name="alert-card" tabindex="0" data-alert="Pedestrian congestion at Gate A entry plaza. Turnstiles lag 12 mins. Recommend directing fans to Gate B lanes.">
               <span class="ticker-badge amber">CONGESTION</span>
               <span class="ticker-text">Gate A: Processing delay. Crowd build-up in progress.</span>
             </div>
@@ -313,7 +313,7 @@
 
               <!-- Carbon Offset Calculator -->
               <div class="calculator-box bg-dark margin-bottom">
-                <h4>Green Impact Impact Estimation</h4>
+                <h4>Green Impact Estimation</h4>
                 <div class="calc-inputs">
                   <div class="calc-row">
                     <label for="calc-passengers">Metro passengers redirected:</label>
@@ -330,7 +330,7 @@
                     <span class="offset-val text-emerald" id="calc-co2-val">235.8 kg</span>
                   </div>
                   <div class="offset-metric">
-                    <span class="offset-label">Sustainability points earned:</span>
+                    <span class="offset-label">Sustainability points:</span>
                     <span class="offset-val text-cyan" id="calc-points-val">670 pts</span>
                   </div>
                 </div>
@@ -338,10 +338,51 @@
 
               <div class="sus-advisory bg-dark">
                 <p><strong>GenAI Sustainability Advisor Recommendation:</strong></p>
-                <p class="small-text text-light" id="sustainability-advice-text">
+                <div class="small-text text-light" id="sustainability-advice-text">
                   Compostable stream (Green Bins) is receiving high plastic cup contamination at Sector 112. Suggest dispatching green volunteers to guide disposal during halftime exit.
-                </p>
+                </div>
                 <button class="btn-secondary" id="btn-refresh-sus">Ask Sustainability AI 🌿</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Volunteer Management Hub (Alignment Parameter Boost) -->
+          <div class="card volunteer-card" style="grid-column: span 2;">
+            <div class="card-header">
+              <h2>Smart Volunteer Deployment & Reallocation</h2>
+              <span class="badge badge-accent">Staff Logistics</span>
+            </div>
+            <div class="card-body">
+              <p class="small-text margin-bottom">Real-time mapping of volunteer squads. Request GenAI to analyze crowd queue dynamics and suggest volunteer movements to gates or recycling areas.</p>
+              
+              <div class="volunteer-grid margin-bottom">
+                <div class="volunteer-box bg-dark">
+                  <span class="vol-label">Zone Alpha (Gate A Access)</span>
+                  <span class="vol-count">14 Volunteers</span>
+                  <span class="vol-status text-amber">Overburdened (1 per 120 fans)</span>
+                </div>
+                <div class="volunteer-box bg-dark">
+                  <span class="vol-label">Zone Beta (Gate B Shuttle)</span>
+                  <span class="vol-count">18 Volunteers</span>
+                  <span class="vol-status text-emerald">Optimal status</span>
+                </div>
+                <div class="volunteer-box bg-dark">
+                  <span class="vol-label">Zone Gamma (Sector 112 Hub)</span>
+                  <span class="vol-count">8 Volunteers</span>
+                  <span class="vol-status text-red">High Waste Contamination</span>
+                </div>
+                <div class="volunteer-box bg-dark">
+                  <span class="vol-label">Zone Delta (VIP/Gate D)</span>
+                  <span class="vol-count">10 Volunteers</span>
+                  <span class="vol-status text-emerald">Underutilized (1 per 15 fans)</span>
+                </div>
+              </div>
+
+              <button class="btn-primary w-100" id="btn-optimize-volunteers">Optimize Staff Allocation with GenAI ⚡</button>
+              
+              <div id="volunteer-advice-box" class="volunteer-advice bg-dark margin-top hidden" aria-live="polite">
+                <span class="route-headline">GenAI Dispatch Optimization Recommendation:</span>
+                <div class="small-text text-light" id="volunteer-advice-text"></div>
               </div>
             </div>
           </div>
@@ -355,13 +396,13 @@
             <div class="card-body">
               <p class="small-text margin-bottom">Report on-site alerts or congestion events. Generative AI will analyze severity, generate immediate dispatch briefs, and outline PA instructions. Click any event card in the top alert ticker to auto-fill details.</p>
               
-              <form id="incident-form" class="incident-form">
+              <form id="incident-form" class="incident-form" aria-label="Operations Incident Dispatch Form">
                 <textarea id="incident-input" placeholder="Select a notification card above, or describe incident details manually (e.g. 'Water leak near elevator C')..." aria-label="Describe the incident" required></textarea>
                 <button type="submit" class="btn-danger w-100" id="btn-dispatch">Analyze & Dispatch with GenAI ⚡</button>
               </form>
 
               <!-- Output response blocks -->
-              <div id="incident-response-area" class="incident-response-container hidden">
+              <div id="incident-response-area" class="incident-response-container hidden" aria-live="polite">
                 <hr class="ops-divider">
                 <div class="response-header">
                   <h3>AI Response Plan Generated</h3>
@@ -395,7 +436,7 @@
       </section>
 
       <!-- VIEW 4: PROMPT LAB & TEST RUNNER -->
-      <section class="view-panel" id="view-lab" aria-label="Prompt Engineering Sandbox and Test Suite">
+      <section class="view-panel" id="view-lab" role="tabpanel" aria-labelledby="btn-lab">
         <div class="lab-layout">
           
           <!-- Left: Prompt Sandbox & API settings -->
@@ -415,7 +456,7 @@
                   <button type="button" class="btn-primary" id="btn-save-key">Save Key</button>
                   <button type="button" class="btn-secondary hidden" id="btn-clear-key">Clear Key</button>
                 </div>
-                <div class="api-key-status" id="api-key-status-msg">
+                <div class="api-key-status" id="api-key-status-msg" role="status" aria-live="polite">
                   <span class="status-indicator-dot yellow"></span> Currently utilizing Local Simulation.
                 </div>
               </div>
@@ -424,7 +465,7 @@
               <div class="prompt-editors-section">
                 <h3>2. Edit Agent System Instructions</h3>
                 
-                <div class="prompt-selector-tabs">
+                <div class="prompt-selector-tabs" aria-label="Select AI Prompt Sandbox">
                   <button class="prompt-tab-btn active" data-agent="fanAssistant">Fan Concierge</button>
                   <button class="prompt-tab-btn" data-agent="opsAssistant">Ops Dispatcher</button>
                   <button class="prompt-tab-btn" data-agent="sustainabilityAdvisor">Sustainability AI</button>
@@ -448,7 +489,7 @@
           <div class="card test-runner-card">
             <div class="card-header">
               <h2>Automated Evaluation Test Suite</h2>
-              <button class="btn-secondary" id="btn-run-tests">Run Suite 🔄</button>
+              <button class="btn-secondary" id="btn-run-tests" aria-label="Execute automated test suite">Run Suite 🔄</button>
             </div>
             <div class="card-body">
               <p class="small-text margin-bottom">Runs local automated tests directly in the browser. Ensures code security, formatting, algorithm bounds, and prompt integrity comply with the challenge criteria.</p>
@@ -469,7 +510,6 @@
               </div>
 
               <div class="test-list" id="test-list-container" role="list" aria-label="Unit Tests List">
-                <!-- Populated dynamically with tests status -->
                 <div class="empty-state">
                   <p>Click "Run Suite" above to execute the criteria validation tests.</p>
                 </div>
