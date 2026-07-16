@@ -8,9 +8,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node run-tests.js"
+    "test": "node run-tests.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "devDependencies": {
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0",
     "vite": "^5.0.0"
   }
 }

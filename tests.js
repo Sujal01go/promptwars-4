@@ -43,7 +43,7 @@ function testSafeRender(text) {
 }
 
 // Route planner mock logic for test
-function calculateMockRoute(sector, dest) {
+function calculateMockRoute(sector, _dest) {
   let text = '';
   if (sector === '108') {
     text = "Exit Sector 108 corridor directly left. Elevators to concourse are active next to sector exit. Head to Gate C Transit terminal.";

@@ -140,15 +140,6 @@ export class AIEngine {
         // Chunks are formatted as: [ { "candidates": ... }, { "candidates": ... } ]
         // A simple way is to parse the streaming text buffer using a regex or search.
         // Often chunks contain individual JSON fragments or a list. Let's process the stream buffer:
-        let match;
-        // Search for JSON objects containing text
-        // Standard chunk format in stream is:
-        // [
-        //   { "candidates": [ { "content": { "parts": [ { "text": "..." } ] } } ] },
-        //   ...
-        // ]
-        // Let's parse JSON fragments dynamically. A safe way is to find complete { ... } boundaries
-        // or parse buffer.
         
         // Clean up brackets from SSE or array wrapper
         let cleanBuffer = buffer.trim();
@@ -177,7 +168,7 @@ export class AIEngine {
             if (i === lastIdx) {
               buffer = '';
             }
-          } catch (e) {
+          } catch (_e) {
             // Failed to parse, meaning it's incomplete. Keep it in the buffer.
             if (i === lastIdx) {
               // Re-align buffer to start with this incomplete chunk

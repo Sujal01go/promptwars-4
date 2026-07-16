@@ -27,12 +27,59 @@ const state = {
 // Instantiate AI Engine
 const ai = new AIEngine();
 
+// Initialize DOM elements queries globally
+const fanChatForm = document.getElementById('fan-chat-form');
+const fanChatInput = document.getElementById('fan-chat-input');
+const fanChatMessages = document.getElementById('fan-chat-messages');
+
+const btnCalculateRoute = document.getElementById('btn-calculate-route');
+const routeFromSelect = document.getElementById('route-from');
+const routeToSelect = document.getElementById('route-to');
+const routeResultBox = document.getElementById('route-result-box');
+const routeResultText = document.getElementById('route-result-text');
+
+const langBtns = document.querySelectorAll('.lang-btn');
+const translatedBox = document.getElementById('translated-pa-text');
+
+const incidentForm = document.getElementById('incident-form');
+const incidentInput = document.getElementById('incident-input');
+const responseArea = document.getElementById('incident-response-area');
+
+const btnOptimizeVolunteers = document.getElementById('btn-optimize-volunteers');
+const volunteerAdviceBox = document.getElementById('volunteer-advice-box');
+const volunteerAdviceText = document.getElementById('volunteer-advice-text');
+
+const calcPassengersInput = document.getElementById('calc-passengers');
+const calcBottlesInput = document.getElementById('calc-bottles');
+const calcCo2Val = document.getElementById('calc-co2-val');
+const calcPointsVal = document.getElementById('calc-points-val');
+
+const refreshSusBtn = document.getElementById('btn-refresh-sus');
+const susAdviceBox = document.getElementById('sustainability-advice-text');
+
+const apiSaveBtn = document.getElementById('btn-save-key');
+const apiClearBtn = document.getElementById('btn-clear-key');
+const apiKeyInput = document.getElementById('gemini-api-key');
+
+const promptTabs = document.querySelectorAll('.prompt-tab-btn');
+const promptTextarea = document.getElementById('prompt-editor-textarea');
+const charCounter = document.getElementById('prompt-char-count');
+const savePromptBtn = document.getElementById('btn-save-prompt');
+const resetPromptBtn = document.getElementById('btn-reset-prompt');
+
+const runTestsBtn = document.getElementById('btn-run-tests');
+const testListContainer = document.getElementById('test-list-container');
+
+const btnContrast = document.getElementById('btn-a11y-contrast');
+const btnTextUp = document.getElementById('btn-a11y-textup');
+const btnTextDn = document.getElementById('btn-a11y-textdn');
+const btnAudio = document.getElementById('btn-a11y-audio');
+
 // Initialize local storage configurations
 function loadConfig() {
   const savedKey = ai.getApiKey();
-  const keyInput = document.getElementById('gemini-api-key');
   if (savedKey) {
-    if (keyInput) keyInput.value = savedKey;
+    if (apiKeyInput) apiKeyInput.value = savedKey;
     updateAPIKeyStatus(true);
   } else {
     updateAPIKeyStatus(false);
@@ -50,8 +97,7 @@ function loadConfig() {
 // Helper to validate API key format (preventing local storage pollution)
 function validateAPIKeyFormat(key) {
   if (!key) return false;
-  // Gemini key starts with AIzaSy and is 39 chars
-  const regex = /^AIzaSy[A-Za-z0-9_-]{33}$/;
+  const regex = /^AIzaSy[A-Za-z0-9_-]{30,40}$/;
   return regex.test(key);
 }
 
@@ -323,7 +369,7 @@ function selectSector(sector) {
   grid.className = 'metric-grid';
 
   const restroomBox = document.createElement('div');
-  restroomBox.className = 'metric-box';
+   restroomBox.className = 'metric-box';
   const rLabel = document.createElement('span');
   rLabel.className = 'metric-box-label';
   rLabel.textContent = 'Restroom Wait';
@@ -816,7 +862,7 @@ async function processOpsIncident(incidentText) {
           if (state.a11yAudioNarrator) {
             narrateVoiceText(`High priority operational plan generated. Dispatch: ${parsed.dispatch}`);
           }
-        } catch (jsonErr) {
+        } catch (_jsonErr) {
           dispatchText.textContent = "AI processed incident, but returned unstructured text:";
           
           while (paText.firstChild) {
@@ -846,10 +892,6 @@ async function processOpsIncident(incidentText) {
 }
 
 // Volunteer allocation optimization
-const btnOptimizeVolunteers = document.getElementById('btn-optimize-volunteers');
-const volunteerAdviceBox = document.getElementById('volunteer-advice-box');
-const volunteerAdviceText = document.getElementById('volunteer-advice-text');
-
 if (btnOptimizeVolunteers) {
   btnOptimizeVolunteers.addEventListener('click', () => {
     if (!volunteerAdviceBox || !volunteerAdviceText) return;
@@ -950,7 +992,6 @@ if (apiSaveBtn) {
       alert('Please enter a valid API key.');
       return;
     }
-    // Validation constraint
     if (!validateAPIKeyFormat(key)) {
       alert('Security Warning: API Key must start with "AIzaSy" and contain only valid alphanumeric characters.');
       return;
@@ -1240,15 +1281,6 @@ function parseInlineStyles(text, parentEl) {
       }
     }
   });
-}
-
-function escapeHtml(unsafe) {
-  return unsafe
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }
 
 // On DOM Loaded initialization
